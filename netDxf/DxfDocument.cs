@@ -828,19 +828,24 @@ namespace netDxf
             return Load(file, new List<string>());
         }
 
-        /// <summary>
-        /// Loads a DXF file.
-        /// </summary>
-        /// <param name="file">File name.</param>
-        /// <param name="supportFolders">List of the document support folders.</param>
-        /// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
-        /// <exception cref="DxfVersionNotSupportedException"></exception>
-        /// <remarks>
-        /// Loading DXF files prior to AutoCad 2000 is not supported.<br />
-        /// The Load method will still raise an exception if they are unable to create the FileStream.<br />
-        /// On Debug mode it will raise any exception that might occur during the whole process.
-        /// </remarks>
-        public static DxfDocument Load(string file, IEnumerable<string> supportFolders)
+        public static DxfDocument LoadEx(string file)
+        {
+	        return LoadEx(file, new List<string>());
+        }
+
+		/// <summary>
+		/// Loads a DXF file.
+		/// </summary>
+		/// <param name="file">File name.</param>
+		/// <param name="supportFolders">List of the document support folders.</param>
+		/// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+		/// <exception cref="DxfVersionNotSupportedException"></exception>
+		/// <remarks>
+		/// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+		/// The Load method will still raise an exception if they are unable to create the FileStream.<br />
+		/// On Debug mode it will raise any exception that might occur during the whole process.
+		/// </remarks>
+		public static DxfDocument Load(string file, IEnumerable<string> supportFolders)
         {            
 
             Stream stream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -874,35 +879,57 @@ namespace netDxf
             return document;
         }
 
-        /// <summary>
-        /// Loads a DXF file.
-        /// </summary>
-        /// <param name="stream">Stream.</param>
-        /// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
-        /// <exception cref="DxfVersionNotSupportedException"></exception>
-        /// <remarks>
-        /// Loading DXF files prior to AutoCad 2000 is not supported.<br />
-        /// On Debug mode it will raise any exception that might occur during the whole process.<br />
-        /// The caller will be responsible of closing the stream.
-        /// </remarks>
-        public static DxfDocument Load(Stream stream)
+		public static DxfDocument LoadEx(string file, IEnumerable<string> supportFolders)
+		{
+			Stream stream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+			var dxfReader = new DxfReader();
+
+            try
+            {
+	            var document = dxfReader.Read(stream, supportFolders);
+                document.name = Path.GetFileNameWithoutExtension(file);
+                return document;
+            }
+			finally
+            {
+                stream.Close();
+            }
+		}
+
+		/// <summary>
+		/// Loads a DXF file.
+		/// </summary>
+		/// <param name="stream">Stream.</param>
+		/// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+		/// <exception cref="DxfVersionNotSupportedException"></exception>
+		/// <remarks>
+		/// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+		/// On Debug mode it will raise any exception that might occur during the whole process.<br />
+		/// The caller will be responsible of closing the stream.
+		/// </remarks>
+		public static DxfDocument Load(Stream stream)
         {
             return Load(stream, new List<string>());
         }
+		public static DxfDocument LoadEx(Stream stream)
+		{
+			return LoadEx(stream, new List<string>());
+		}
 
-        /// <summary>
-        /// Loads a DXF file.
-        /// </summary>
-        /// <param name="stream">Stream.</param>
-        /// <param name="supportFolders">List of the document support folders.</param>
-        /// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
-        /// <exception cref="DxfVersionNotSupportedException"></exception>
-        /// <remarks>
-        /// Loading DXF files prior to AutoCad 2000 is not supported.<br />
-        /// On Debug mode it will raise any exception that might occur during the whole process.<br />
-        /// The caller will be responsible of closing the stream.
-        /// </remarks>
-        public static DxfDocument Load(Stream stream, IEnumerable<string> supportFolders)
+		/// <summary>
+		/// Loads a DXF file.
+		/// </summary>
+		/// <param name="stream">Stream.</param>
+		/// <param name="supportFolders">List of the document support folders.</param>
+		/// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+		/// <exception cref="DxfVersionNotSupportedException"></exception>
+		/// <remarks>
+		/// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+		/// On Debug mode it will raise any exception that might occur during the whole process.<br />
+		/// The caller will be responsible of closing the stream.
+		/// </remarks>
+		public static DxfDocument Load(Stream stream, IEnumerable<string> supportFolders)
         {
             DxfReader dxfReader = new DxfReader();
 
@@ -927,18 +954,27 @@ namespace netDxf
             return document;
         }
 
-        /// <summary>
-        /// Saves the database of the actual DxfDocument to a text DXF file.
-        /// </summary>
-        /// <param name="file">File name.</param>
-        /// <returns>Return true if the file has been successfully save, false otherwise.</returns>
-        /// <exception cref="DxfVersionNotSupportedException"></exception>
-        /// <remarks>
-        /// If the file already exists it will be overwritten.<br />
-        /// The Save method will still raise an exception if they are unable to create the FileStream.<br />
-        /// On Debug mode they will raise any exception that might occur during the whole process.
-        /// </remarks>
-        public bool Save(string file)
+		public static DxfDocument LoadEx(Stream stream, IEnumerable<string> supportFolders)
+		{
+			var dxfReader = new DxfReader();
+
+			var document = dxfReader.Read(stream, supportFolders);
+            
+			return document;
+		}
+
+		/// <summary>
+		/// Saves the database of the actual DxfDocument to a text DXF file.
+		/// </summary>
+		/// <param name="file">File name.</param>
+		/// <returns>Return true if the file has been successfully save, false otherwise.</returns>
+		/// <exception cref="DxfVersionNotSupportedException"></exception>
+		/// <remarks>
+		/// If the file already exists it will be overwritten.<br />
+		/// The Save method will still raise an exception if they are unable to create the FileStream.<br />
+		/// On Debug mode they will raise any exception that might occur during the whole process.
+		/// </remarks>
+		public bool Save(string file)
         {
             return this.Save(file, false);
         }
