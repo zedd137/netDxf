@@ -335,11 +335,18 @@ namespace netDxf.IO
             return bytes.ToArray();
         }
 
-        private short ReadShort(string valueString)
+        const double eps = 1e-6;
+
+		private short ReadShort(string valueString)
         {
             short result;
             if (short.TryParse(valueString, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                 return result;
+
+            var dTemp = ReadDouble(valueString);
+            result = (short)Math.Round(dTemp);
+            if (Math.Abs(dTemp - result) < eps)
+	            return result;
 
             throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
@@ -350,7 +357,12 @@ namespace netDxf.IO
             if (int.TryParse(valueString, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                 return result;
 
-            throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+            var dTemp = ReadDouble(valueString);
+            result = (int)Math.Round(dTemp);
+            if (Math.Abs(dTemp - result) < eps)
+	            return result;
+
+			throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         private long ReadLong(string valueString)
@@ -359,7 +371,12 @@ namespace netDxf.IO
             if (long.TryParse(valueString, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                 return result;
 
-            throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+            var dTemp = ReadDouble(valueString);
+            result = (long)Math.Round(dTemp);
+            if (Math.Abs(dTemp - result) < eps)
+	            return result;
+
+			throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         private bool ReadBool(string valueString)
