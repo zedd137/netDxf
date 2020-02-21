@@ -2272,7 +2272,7 @@ namespace netDxf.IO
             string handleToStyle = string.Empty;
             Vector2 offset = Vector2.Zero;
             double rotation = 0.0;
-            double scale = 0.0;
+            double scale = 1.0;
 
             // read until a new linetype segment is found or the end of the linetype definition
             while (this.chunk.Code != 49 && this.chunk.Code != 0)
@@ -2289,6 +2289,8 @@ namespace netDxf.IO
                         break;
                     case 46:
                         scale = this.chunk.ReadDouble();
+                        if (scale <= 0)
+	                        scale = 1.0;
                         this.chunk.Next();
                         break;
                     case 50:
