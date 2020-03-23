@@ -879,6 +879,30 @@ namespace netDxf
             return document;
         }
 
+        /// <summary>
+        /// Loads a DXF file and throws on error.
+        /// </summary>
+        /// <param name="file">File name.</param>
+        /// <param name="supportFolders">List of the document support folders.</param>
+        /// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+        /// <exception cref="DxfVersionNotSupportedException"></exception>
+        /// <remarks>
+        /// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+        /// Expected Exceptions:<br />
+        ///   DxfVersionNotSupportedException - unsupported DXF version, netDxf only supports DXF file versions AutoCad2000 and higher<br />
+        ///   DxfException - unexpected content or illegal value<br />
+        ///   ArgumentOuOfRangeException - unexpected content or illegal value<br />
+        ///   ArgumentNullException - unexpected content or illegal value<br />
+        ///   ArgumentException - unexpected content or illegal value<br />
+        ///   OverflowException - unexpected content or illegal value<br />
+        ///   NotSupportedException - unexpected content or illegal value<br />
+        ///   FormatException - unexpected content or illegal value<br />
+        ///   NullReferenceException - unexpected content or illegal value<br />
+        ///   ArithmeticException - illegal data<br />
+        ///   IOException - file io error<br />
+        ///   FileNotFoundException - referenced file not found<br />
+        ///   FileLoadException - error loading file<br />
+        /// </remarks>
 		public static DxfDocument LoadEx(string file, IEnumerable<string> supportFolders)
 		{
 			Stream stream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -912,7 +936,32 @@ namespace netDxf
         {
             return Load(stream, new List<string>());
         }
-		public static DxfDocument LoadEx(Stream stream)
+
+        /// <summary>
+        /// Loads a DXF file, throws on error.
+        /// </summary>
+        /// <param name="stream">Stream.</param>
+        /// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+        /// <exception cref="DxfVersionNotSupportedException"></exception>
+        /// <remarks>
+        /// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+        /// The caller will be responsible of closing the stream.
+        /// Expected Exceptions:<br />
+        ///   DxfVersionNotSupportedException - unsupported DXF version, netDxf only supports DXF file versions AutoCad2000 and higher<br />
+        ///   DxfException - unexpected content or illegal value<br />
+        ///   ArgumentOuOfRangeException - unexpected content or illegal value<br />
+        ///   ArgumentNullException - unexpected content or illegal value<br />
+        ///   ArgumentException - unexpected content or illegal value<br />
+        ///   OverflowException - unexpected content or illegal value<br />
+        ///   NotSupportedException - unexpected content or illegal value<br />
+        ///   FormatException - unexpected content or illegal value<br />
+        ///   NullReferenceException - unexpected content or illegal value<br />
+        ///   ArithmeticException - illegal data<br />
+        ///   IOException - file io error<br />
+        ///   FileNotFoundException - referenced file not found<br />
+        ///   FileLoadException - error loading file<br />
+        /// </remarks>
+        public static DxfDocument LoadEx(Stream stream)
 		{
 			return LoadEx(stream, new List<string>());
 		}
@@ -954,7 +1003,33 @@ namespace netDxf
             return document;
         }
 
-		public static DxfDocument LoadEx(Stream stream, IEnumerable<string> supportFolders)
+        /// <summary>
+        /// Loads a DXF file, throws on error
+        /// </summary>
+        /// <param name="stream">Stream.</param>
+        /// <param name="supportFolders">List of the document support folders.</param>
+        /// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+        /// <exception cref="DxfVersionNotSupportedException"></exception>
+        /// <remarks>
+        /// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+        /// On Debug mode it will raise any exception that might occur during the whole process.<br />
+        /// The caller will be responsible of closing the stream.
+        /// Expected Exceptions:<br />
+        ///   DxfVersionNotSupportedException - unsupported DXF version, netDxf only supports DXF file versions AutoCad2000 and higher<br />
+        ///   DxfException - unexpected content or illegal value<br />
+        ///   ArgumentOuOfRangeException - unexpected content or illegal value<br />
+        ///   ArgumentNullException - unexpected content or illegal value<br />
+        ///   ArgumentException - unexpected content or illegal value<br />
+        ///   OverflowException - unexpected content or illegal value<br />
+        ///   NotSupportedException - unexpected content or illegal value<br />
+        ///   FormatException - unexpected content or illegal value<br />
+        ///   NullReferenceException - unexpected content or illegal value<br />
+        ///   ArithmeticException - illegal data<br />
+        ///   IOException - file io error<br />
+        ///   FileNotFoundException - referenced file not found<br />
+        ///   FileLoadException - error loading file<br />
+        /// </remarks>
+        public static DxfDocument LoadEx(Stream stream, IEnumerable<string> supportFolders)
 		{
 			var dxfReader = new DxfReader();
 
