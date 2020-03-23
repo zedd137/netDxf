@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using netDxf;
 
 namespace netDxf.IO
 {
@@ -156,7 +157,7 @@ namespace netDxf.IO
             else if (this.code >= 480 && this.code <= 481) // string representing hex handle value
                 this.value = this.ReadHex(this.NullTerminatedString());
             else if (this.code == 999) // comment (string)
-                throw new Exception(string.Format("The comment group, 999, is not used in binary DXF files at byte address {0}", this.reader.BaseStream.Position));
+                throw new DxfException(string.Format("The comment group, 999, is not used in binary DXF files at byte address {0}", this.reader.BaseStream.Position));
             else if (this.code >= 1010 && this.code <= 1059) // double-precision floating-point value
                 this.value = this.reader.ReadDouble();
             else if (this.code >= 1000 && this.code <= 1003) // string (same limits as indicated with 0-9 code range)
@@ -170,7 +171,7 @@ namespace netDxf.IO
             else if (this.code == 1071) // 32-bit integer value
                 this.value = this.reader.ReadInt32();
             else
-                throw new Exception(string.Format("Code {0} not valid at byte address {1}", this.code, this.reader.BaseStream.Position));
+                throw new DxfException(string.Format("Code {0} not valid at byte address {1}", this.code, this.reader.BaseStream.Position));
         }
 
         public byte ReadByte()
@@ -251,7 +252,7 @@ namespace netDxf.IO
             if (long.TryParse(hex, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out test))
                 return test.ToString("X");
 
-            throw new Exception(string.Format("Value {0} not valid at line {1}", hex, this.CurrentPosition));
+            throw new DxfException(string.Format("Value {0} not valid at line {1}", hex, this.CurrentPosition));
         }
 
         #endregion       

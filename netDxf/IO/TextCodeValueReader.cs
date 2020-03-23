@@ -77,7 +77,7 @@ namespace netDxf.IO
             string readCode = this.reader.ReadLine();
             this.currentPosition += 1;
             if (!short.TryParse(readCode, NumberStyles.Integer, CultureInfo.InvariantCulture, out this.code))
-                throw new Exception(string.Format("Code {0} not valid at line {1}", this.code, this.currentPosition));
+                throw new DxfException(string.Format("Code {0} not valid at line {1}", this.code, this.currentPosition));
             this.value = this.ReadValue(this.reader.ReadLine());
             this.currentPosition += 1;
         }
@@ -307,7 +307,7 @@ namespace netDxf.IO
                 return this.ReadInt(valueString);
             }
 
-            throw new Exception(string.Format("Code {0} not valid at line {1}", this.code, this.currentPosition));
+            throw new DxfException(string.Format("Code {0} not valid at line {1}", this.code, this.currentPosition));
         }
 
         private byte ReadByte(string valueString)
@@ -316,7 +316,7 @@ namespace netDxf.IO
             if (byte.TryParse(valueString, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture, out result))
                 return result;
 
-            throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+            throw new DxfException(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         private byte[] ReadBytes(string valueString)
@@ -329,7 +329,7 @@ namespace netDxf.IO
                 if (byte.TryParse(hex, NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture, out result))
                     bytes.Add(result);
                 else
-                    throw new Exception(string.Format("Value {0} not valid at line {1}", hex, this.currentPosition));
+                    throw new DxfException(string.Format("Value {0} not valid at line {1}", hex, this.currentPosition));
             }
 
             return bytes.ToArray();
@@ -348,7 +348,7 @@ namespace netDxf.IO
             if (Math.Abs(dTemp - result) < eps)
 	            return result;
 
-            throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+            throw new DxfException(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         private int ReadInt(string valueString)
@@ -362,7 +362,7 @@ namespace netDxf.IO
             if (Math.Abs(dTemp - result) < eps)
 	            return result;
 
-			throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+			throw new DxfException(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         private long ReadLong(string valueString)
@@ -376,7 +376,7 @@ namespace netDxf.IO
             if (Math.Abs(dTemp - result) < eps)
 	            return result;
 
-			throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+			throw new DxfException(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         private bool ReadBool(string valueString)
@@ -391,7 +391,7 @@ namespace netDxf.IO
             if (double.TryParse(valueString, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
                 return result;
 
-            throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+            throw new DxfException(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         private string ReadString(string valueString)
@@ -405,7 +405,7 @@ namespace netDxf.IO
             if (long.TryParse(valueString, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out test))
                 return test.ToString("X");
 
-            throw new Exception(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
+            throw new DxfException(string.Format("Value {0} not valid at line {1}", valueString, this.currentPosition));
         }
 
         #endregion

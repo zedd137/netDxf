@@ -257,7 +257,7 @@ namespace netDxf.IO
             }
             else if (code == 999) // comment (string)
             {
-                throw new Exception(string.Format("The comment group, 999, is not used in binary DXF files at byte address {0}", this.writer.BaseStream.Position));
+                throw new DxfException(string.Format("The comment group, 999, is not used in binary DXF files at byte address {0}", this.writer.BaseStream.Position));
             }
             else if (code >= 1010 && code <= 1059) // double-precision floating-point value
             {
@@ -291,7 +291,7 @@ namespace netDxf.IO
             }
             else
             {
-                throw new Exception(string.Format("Code {0} not valid at byte address {1}", this.dxfCode, this.writer.BaseStream.Position));
+                throw new DxfException(string.Format("Code {0} not valid at byte address {1}", this.dxfCode, this.writer.BaseStream.Position));
             }
 
             this.dxfValue = value;

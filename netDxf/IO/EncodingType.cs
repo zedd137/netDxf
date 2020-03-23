@@ -76,7 +76,7 @@ namespace netDxf.IO
                 }
             }
             if (charByteCounter > 1)
-                throw new Exception("Error byte format.");
+                throw new DxfException("Error byte format.");
 
             return true;
         }

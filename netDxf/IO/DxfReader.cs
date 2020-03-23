@@ -274,7 +274,7 @@ namespace netDxf.IO
                             this.ReadAcdsData();
                             break;
                         default:
-                            throw new Exception(string.Format("Unknown section {0}.", this.chunk.ReadString()));
+                            throw new DxfException(string.Format("Unknown section {0}.", this.chunk.ReadString()));
                     }
                 }
                 this.chunk.Next();
@@ -651,7 +651,7 @@ namespace netDxf.IO
                         this.chunk.Next();
                         break;
                     default:
-                        throw new Exception("Invalid code in vector header variable.");
+                        throw new DxfException("Invalid code in vector header variable.");
                 }
             }
             return pos;
@@ -1080,7 +1080,7 @@ namespace netDxf.IO
                     this.doc.VPorts = new VPorts(this.doc, handle);
                     break;
                 default:
-                    throw new Exception(string.Format("Unknown Table name {0} at position {1}", tableName, this.chunk.CurrentPosition));
+                    throw new DxfException(string.Format("Unknown Table name {0} at position {1}", tableName, this.chunk.CurrentPosition));
             }
 
             // read table entries
@@ -1256,7 +1256,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -1314,7 +1314,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -1842,7 +1842,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -2150,7 +2150,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -2252,7 +2252,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -2426,7 +2426,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -2579,7 +2579,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -2715,7 +2715,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -2824,7 +2824,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -2867,7 +2867,7 @@ namespace netDxf.IO
             }
 
             if (!this.blockRecords.TryGetValue(name, out blockRecord))
-                throw new Exception(string.Format("The block record {0} is not defined.", name));
+                throw new DxfException(string.Format("The block record {0} is not defined.", name));
 
             Block block;
 
@@ -3044,7 +3044,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -3119,7 +3119,7 @@ namespace netDxf.IO
                 switch (this.chunk.Code)
                 {
                     case 0:
-                        throw new Exception(string.Format("Premature end of entity {0} definition.", DxfObjectCode.Attribute));
+                        throw new DxfException(string.Format("Premature end of entity {0} definition.", DxfObjectCode.Attribute));
                     case 5:
                         handle = this.chunk.ReadHex();
                         this.chunk.Next();
@@ -3137,7 +3137,7 @@ namespace netDxf.IO
                 switch (this.chunk.Code)
                 {
                     case 0:
-                        throw new Exception(string.Format("Premature end of entity {0} definition.", DxfObjectCode.Attribute));
+                        throw new DxfException(string.Format("Premature end of entity {0} definition.", DxfObjectCode.Attribute));
                     case 8: // layer code
                         string layerName = this.DecodeEncodedNonAsciiCharacters(this.chunk.ReadString());
                         layer = this.GetLayer(layerName);
@@ -3352,7 +3352,7 @@ namespace netDxf.IO
                 switch (this.chunk.Code)
                 {
                     case 0:
-                        throw new Exception(string.Format("Premature end of entity {0} definition.", dxfCode));
+                        throw new DxfException(string.Format("Premature end of entity {0} definition.", dxfCode));
                     case 5:
                         handle = this.chunk.ReadHex();
                         this.chunk.Next();
@@ -3380,7 +3380,7 @@ namespace netDxf.IO
                 switch (this.chunk.Code)
                 {
                     case 0:
-                        throw new Exception(string.Format("Premature end of entity {0} definition.", dxfCode));
+                        throw new DxfException(string.Format("Premature end of entity {0} definition.", dxfCode));
                     case 8: //layer code
                         string layerName = this.DecodeEncodedNonAsciiCharacters(this.chunk.ReadString());
                         layer = this.GetLayer(layerName);
@@ -3624,7 +3624,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -3728,7 +3728,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -3862,7 +3862,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -3968,7 +3968,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -4166,7 +4166,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -4268,7 +4268,7 @@ namespace netDxf.IO
                         if (edges == null)
                             throw new NullReferenceException("The edges list is not initialized.");
                         if (numCrease != edges.Count)
-                            throw new Exception("The number of edge creases must be the same as the number of edges.");
+                            throw new DxfException("The number of edge creases must be the same as the number of edges.");
                         this.ReadMeshEdgeCreases(edges);
                         break;
                     case 1001:
@@ -4278,7 +4278,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -4554,7 +4554,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -4691,7 +4691,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -4809,7 +4809,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -4888,7 +4888,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -5728,7 +5728,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -5806,7 +5806,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -5866,7 +5866,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -5924,7 +5924,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -6007,7 +6007,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -6103,7 +6103,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -6183,7 +6183,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -6282,7 +6282,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -6389,7 +6389,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -6481,7 +6481,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -6581,7 +6581,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -6701,7 +6701,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -6810,7 +6810,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -7015,7 +7015,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -7135,7 +7135,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -7256,7 +7256,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -7318,7 +7318,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -7377,7 +7377,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -7476,7 +7476,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -7658,7 +7658,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -7748,7 +7748,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -8105,7 +8105,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -8276,7 +8276,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -8380,7 +8380,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
 
                         this.chunk.Next();
                         break;
@@ -9129,7 +9129,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -9255,7 +9255,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -9366,7 +9366,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }
@@ -9417,7 +9417,7 @@ namespace netDxf.IO
                 switch (this.chunk.Code)
                 {
                     case 0:
-                        throw new Exception(string.Format("Premature end of object {0} definition.", dxfCode));
+                        throw new DxfException(string.Format("Premature end of object {0} definition.", dxfCode));
                     case 5:
                         handle = this.chunk.ReadHex();
                         this.chunk.Next();
@@ -9556,7 +9556,7 @@ namespace netDxf.IO
                         break;
                     default:
                         if (this.chunk.Code >= 1000 && this.chunk.Code <= 1071)
-                            throw new Exception("The extended data of an entity must start with the application registry code.");
+                            throw new DxfException("The extended data of an entity must start with the application registry code.");
                         this.chunk.Next();
                         break;
                 }

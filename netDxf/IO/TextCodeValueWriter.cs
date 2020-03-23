@@ -291,7 +291,7 @@ namespace netDxf.IO
             }
             else
             {
-                throw new Exception(string.Format("Code {0} not valid at line {1}", this.dxfCode, this.currentPosition));
+                throw new DxfException(string.Format("Code {0} not valid at line {1}", this.dxfCode, this.currentPosition));
             }
 
             this.dxfValue = value;

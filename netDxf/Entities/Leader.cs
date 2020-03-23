@@ -489,7 +489,7 @@ namespace netDxf.Entities
         private void ResetHookPosition()
         {
             if (this.vertexes.Count < 2)
-                throw new Exception("The leader vertexes list requires at least two points.");
+                throw new DxfException("The leader vertexes list requires at least two points.");
 
             if (this.annotation == null)
                 return;
@@ -589,7 +589,7 @@ namespace netDxf.Entities
                     text.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
                     break;
                 default:
-                    throw new Exception(string.Format("The entity type: {0} not supported as a leader annotation.", this.annotation.Type));
+                    throw new DxfException(string.Format("The entity type: {0} not supported as a leader annotation.", this.annotation.Type));
             }
         }
 
@@ -599,7 +599,7 @@ namespace netDxf.Entities
         private void ResetAnnotationPosition()
         {
             if (this.vertexes.Count < 2)
-                throw new Exception("The leader vertexes list requires at least two points.");
+                throw new DxfException("The leader vertexes list requires at least two points.");
 
             if (this.annotation == null)
                 return;
@@ -703,7 +703,7 @@ namespace netDxf.Entities
                     break;
 
                 default:
-                    throw new Exception(string.Format("The entity type: {0} not supported as a leader annotation.", this.annotation.Type));
+                    throw new DxfException(string.Format("The entity type: {0} not supported as a leader annotation.", this.annotation.Type));
             }
         }
 
@@ -767,7 +767,7 @@ namespace netDxf.Entities
         private Vector2 CalculateHookLine()
         {
             if (this.vertexes.Count < 2)
-                throw new Exception("The leader vertexes list requires at least two points.");
+                throw new DxfException("The leader vertexes list requires at least two points.");
 
             DimensionStyleOverride styleOverride;
             double dimScale = this.Style.DimScaleOverall;
